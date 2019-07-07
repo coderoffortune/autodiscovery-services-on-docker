@@ -1,0 +1,48 @@
+version: '3'
+
+services:
+  reverse-proxy:
+    image: traefik # The official Traefik docker image
+    command: --api --docker # Enables the web UI and tells Traefik to listen to docker
+    networks:
+      - tools_network
+    ports:
+      - "80:80"     # The HTTP port
+      - "8080:8080" # The Web UI (enabled by --api)
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock 
+    labels:
+      - traefik.enable=true
+      - traefik.backend.loadbalancer.sticky=true
+      - traefik.frontend.passHostHeader=true
+
+  dashboard:
+    image: dashboard
+    networks:
+      - tools_network
+    environment:
+      - ASPNETCORE_ENVIRONMENT=Development
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock 
+    labels:
+      - "traefik.frontend.rule=Host:dashboard.tools.net"
+      - "traefik.port=80"
+
+  tool1:
+    image: tool1
+    networks:
+      - tools_network
+    labels:
+      - "traefik.frontend.rule=Host:learning.tools.net"
+      - "tools.autodiscovery=http://learning.tools.net/autodiscovery/config.json"
+    
+  tool2:
+    image: tool2
+    networks:
+      - tools_network
+    labels:
+      - "traefik.frontend.rule=Host:configurations.tools.net"
+      - "tools.autodiscovery=http://configurations.tools.net/autodiscovery.json"
+
+networks:
+  tools_network:

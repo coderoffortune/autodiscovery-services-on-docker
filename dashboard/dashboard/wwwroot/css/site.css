@@ -1,0 +1,50 @@
+﻿body {
+    padding-top: 50px;
+    padding-bottom: 20px;
+}
+body > footer {
+    border-top: 1px solid #888;
+    padding: 10px;
+}
+
+.body-content {
+    margin: 50px auto;
+    padding-left: 15px;
+    padding-right: 15px;
+}
+
+.tools {
+    display: grid;
+    grid-template-rows: auto;
+    grid-template-columns: repeat(5, 1fr);
+    column-gap: 30px;
+    list-style: none;
+    padding: 0;
+}
+.tools .tool-url {
+    display: flex;
+    flex-direction: column;
+}
+.tools img {
+    width: 70%;
+    margin: 0 auto 20px;
+}
+.tools .title {
+    font-size: 22px;
+}
+.tools .author {
+    font-style: italic
+}
+.tools .description {
+    margin: 10px 0 0;
+}
+
+.errors h2 {
+    font-size: 18px;
+    text-transform: uppercase;
+    color: #444;
+}
+
+/* Hide/rearrange for smaller screens */
+@media screen and (max-width: 767px) {
+}

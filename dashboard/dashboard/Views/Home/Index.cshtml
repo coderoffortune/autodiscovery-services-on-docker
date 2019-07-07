@@ -1,0 +1,23 @@
+﻿@model HomeModel
+
+@{
+    ViewData["Title"] = "Home Page";
+}
+
+<ul class="tools" role="list" data-containers-found="@Model.ContainersCount">
+    @foreach (var tool in Model.Tools)
+    {
+        <li class="tool">
+            <a href="@tool.url" target="_blank" title="@tool.title" class="tool-url">
+                <img src="@tool.icon" alt="@tool.title" />
+                <span class="title">@tool.title</span>
+            </a>
+            <span class="author">made by @tool.author</span>
+            <p class="description">
+                @tool.description
+            </p>
+        </li>
+    }
+</ul>
+
+<partial name="_PrintErrors" model="Model.ErrorMessages" />
